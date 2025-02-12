@@ -10,7 +10,7 @@ Rel(personAlias, systemAlias, "Run", "Starts the Linter Using CLI with either a 
 System_Ext(Trufflehog, "Trufflehog", "A tool that checks for secrets in a given repository")
 Rel(systemAlias, Trufflehog, "Uses to find secrets")
 
-System_Ext(git, "GitHub", "Version Control Service")
+System_Ext(git, "Git", "Version Control Service")
 System_Ext(githost, "Git Repository Hoster", "A service that hosts Git Repos")
 Rel(systemAlias, git, "Talks to in order to be able to clone repository from url")
 Rel(git, githost, "Uses to clone Repository on Device")
