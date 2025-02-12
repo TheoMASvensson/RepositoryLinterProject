@@ -28,3 +28,4 @@ C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\refint\RepoL
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.pdb
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.genruntimeconfig.cache
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\ref\RepoLinter.dll
+C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.sourcelink.json

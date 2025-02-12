@@ -46,7 +46,7 @@ var rootCommand = new RootCommand("A simple program that takes a URL or a path a
             }
             
             string clonedFoldersPath = Path.Join(Directory.GetCurrentDirectory(), "/git");
-            List<string> fileList = new List<string>(Directory.EnumerateFiles(clonedFoldersPath));
+            var fileList = Directory.EnumerateFiles(clonedFoldersPath).ToList();
             
             if (fileList.Count == 0)
             {
