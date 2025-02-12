@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLinter", "RepoLinter\RepoLinter.csproj", "{E4C58769-4586-49E7-8690-B82EE1978ECC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B3F831FF-C890-439B-98D7-5C9D9FB4AC28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{E4C58769-4586-49E7-8690-B82EE1978ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C58769-4586-49E7-8690-B82EE1978ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4C58769-4586-49E7-8690-B82EE1978ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3F831FF-C890-439B-98D7-5C9D9FB4AC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F831FF-C890-439B-98D7-5C9D9FB4AC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3F831FF-C890-439B-98D7-5C9D9FB4AC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3F831FF-C890-439B-98D7-5C9D9FB4AC28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
