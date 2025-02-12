@@ -1,0 +1,17 @@
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personAlias, "User", "Individual that wants to know if a certain GitHub repository is following best pratices")
+
+System(systemAlias, "Linter", "Program That Checks For Best Practices in a Repository")
+
+Rel(personAlias, systemAlias, "Run", "Starts the Linter Using CLI with either a URL or local folder path")
+
+System_Ext(Trufflehog, "Trufflehog", "A tool that checks for secrets in a given repository")
+Rel(systemAlias, Trufflehog, "Uses to find secrets")
+
+System_Ext(git, "GitHub", "Version Control Service")
+System_Ext(githost, "Git Repository Hoster", "A service that hosts Git Repos")
+Rel(systemAlias, git, "Talks to in order to be able to clone repository from url")
+Rel(git, githost, "Uses to clone Repository on Device")
+@enduml
