@@ -1,7 +1,4 @@
-﻿using System.Xml;
-using RepoLinter;
-
-public class Checks
+﻿public class Checks
 {
 
     public static string RunAllChecks(List<string> filePaths, string currentDirectory)
@@ -9,40 +6,67 @@ public class Checks
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
+        output += "";
         return output;
     }
 
-    static string GitignoreCheck(List<string> filePaths, string currentDirectory)
+    public static string GitignoreCheck(List<string> filePaths, string currentDirectory)
     {
         var result = "";
-        if (filePaths.Contains(Path.Join(currentDirectory, ".gitignore")))
+        var numberOfGitignoreFiles = 0;
+
+        foreach (var filePath in filePaths)
         {
-            result += "Repository contains gitignore file: \u2705" + "\n";
+            var filename = Path.GetFileName(filePath);
+            if (filename == ".gitignore")
+            {
+                numberOfGitignoreFiles += 1;
+            }
         }
-        else
+
+        if (numberOfGitignoreFiles > 1)
         {
-            result += "Repository does not contain gitignore file: \ud83d\udd34" + "\n";
+            result += "Repository contains to many gitignore files, numbering " + numberOfGitignoreFiles + ". Please fix: " + "\n";
+        }
+        else if (numberOfGitignoreFiles == 1)
+        {
+            result += "Repository contains a gitignore file: \u2705" + "\n";
+        }
+        if (numberOfGitignoreFiles == 0)
+        {
+            result += "Repository does not contain a gitignore file. Please fix: \ud83d\udd34" + "\n";
         }
         
         return result;
     }
 
-    static string LicenseCheck(List<string> filePaths, string currentDirectory)
+    public static string LicenseCheck(List<string> filePaths, string currentDirectory)
     {
         var result = "";
+        var numberOfLicenseFiles = 0;
         
-        if (filePaths.Contains(Path.Join(currentDirectory, "LICENSE")))
+        foreach (var filePath in filePaths)
         {
-            result += "Repository contains LICENSE file: \u2705" + "\n";
+            var filename = Path.GetFileName(filePath);
+            if (filename == "LICENSE" || filename == "LICENCE" || filename == "LICENSE.txt" || filename == "LICENSE.md")
+            {
+                numberOfLicenseFiles += 1;
+            }
         }
-        else if (filePaths.Contains(Path.Join(currentDirectory, "LICENCE")))
+        
+        if (numberOfLicenseFiles > 1)
         {
-            result += "Repository contains LICENCE file: \u2705" + "\n";
+            result += "Repository contains to many License files, numbering " + numberOfLicenseFiles + ". Please fix: " + "\n";
         }
-        else
+        else if (numberOfLicenseFiles == 1)
         {
-            result += "Repository does not contain LICENSE or LICENCE file: \ud83d\udd34" + "\n";
+            result += "Repository contains a License file: \u2705" + "\n";
         }
+        if (numberOfLicenseFiles == 0)
+        {
+            result += "Repository does not contain a License file. Please fix: \ud83d\udd34" + "\n";
+        }
+        
         return result;
     }
 
