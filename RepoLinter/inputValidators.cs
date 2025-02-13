@@ -1,7 +1,10 @@
+namespace RepoLinter;
+
 public class URLValidator
 {
     public static bool IsValidURL(string url)
     {
+        // Check if 
         if (string.IsNullOrWhiteSpace(url))
         {
             return false;

@@ -1,7 +1,8 @@
 ﻿using System.CommandLine;
+using System.Threading.Channels;
 using RepoLinter;
 
-var rootCommand = new RootCommand("A simple program that takes a URL or a path and validates it.");
+var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or path to a repository and validates it.");
 
         var urlCommand = new Command("url", "Run linter on URL");
         var urlArg = new Argument<string>("url", "URL");
@@ -34,7 +35,8 @@ var rootCommand = new RootCommand("A simple program that takes a URL or a path a
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
             var git = new Git(url);
-
+            
+            // Try to clone repository from given url
             try
             {
                 git.Clone();
@@ -45,22 +47,16 @@ var rootCommand = new RootCommand("A simple program that takes a URL or a path a
                 Environment.Exit(1);
             }
             
-            string clonedFoldersPath = Path.Join(Directory.GetCurrentDirectory(), "/git");
-            var fileList = Directory.EnumerateFiles(clonedFoldersPath).ToList();
-            
-            if (fileList.Count == 0)
-            {
-                Console.WriteLine("No files found in given folder.");
-                Environment.Exit(1);
-            }
+            // Get all files in repository as a List
+            var clonedFoldersPath = git.PathToGitRepository;
+            var fileList = getAllFiles.AsList(clonedFoldersPath);
 
-            foreach (var filepath in fileList)
-            {
-                Console.WriteLine(filepath);
-            }
-            
-            Console.WriteLine(fileList.Contains(Path.Join(clonedFoldersPath, ".gitignore")));
-            Console.WriteLine(fileList.Contains(Path.Join(clonedFoldersPath, "LICENSE"))); //LICENCE
+            //foreach (var filepath in fileList)
+            //{
+                //Console.WriteLine(filepath);
+            //}
+
+            Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
             
         }, urlArg);
 
@@ -69,22 +65,15 @@ var rootCommand = new RootCommand("A simple program that takes a URL or a path a
         pathCommand.SetHandler((path)=> {
             Console.WriteLine($"You entered path: {path}");
             
-            List<string> fileList = new List<string>(Directory.EnumerateFiles(path));
+            // Get all files in repository as a list
+            var fileList = getAllFiles.AsList(path);
 
-            if (fileList.Count == 0)
-            {
-                Console.WriteLine("No files found in given folder.");
-                Environment.Exit(1);
-            }
-
-            foreach (var filepath in fileList)
-            {
-                Console.WriteLine(filepath);
-            }
+            //foreach (var filepath in fileList)
+            //{
+            //    Console.WriteLine(filepath);
+            //}
             
-            Console.WriteLine(fileList.Contains(Path.Join(path, ".gitignore")));
-            Console.WriteLine(fileList.Contains(Path.Join(path, "LICENSE"))); //LICENCE
-            
+            Console.WriteLine(Checks.RunAllChecks(fileList, path));
             
         }, pathArg);
 
