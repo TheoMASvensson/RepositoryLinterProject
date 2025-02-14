@@ -49,7 +49,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             
             // Get all files in repository as a List
             var clonedFoldersPath = git.PathToGitRepository;
-            var fileList = getAllFiles.AsList(clonedFoldersPath);
+            var fileList = GetAllFiles.AsList(clonedFoldersPath);
 
             //foreach (var filepath in fileList)
             //{
@@ -75,7 +75,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             Console.WriteLine($"You entered path: {path}");
             
             // Get all files in repository as a list
-            var fileList = getAllFiles.AsList(path);
+            var fileList = GetAllFiles.AsList(path);
 
             //foreach (var filepath in fileList)
             //{
@@ -94,5 +94,8 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             Console.WriteLine(Checks.RunAllChecks(fileList, path));
             
         }, pathArg);
+
+        //TODO: Return 0 if all checks are passed. A 1 if any of them fail
+        //TODO: Finish Dockerfile
 
         return await rootCommand.InvokeAsync(args);

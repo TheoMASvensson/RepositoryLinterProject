@@ -10,6 +10,9 @@ public class Checks
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
         //output += SecretCheck(filePaths, currentDirectory);
+        output += READMECheck(filePaths, currentDirectory);
+        //output += TestCheck(filePaths, currentDirectory);
+        //output += WorkflowCheck(filePaths, currentDirectory);
         return output;
     }
 
@@ -27,17 +30,14 @@ public class Checks
             }
         }
 
-        if (numberOfGitignoreFiles > 1)
+        
+        if (numberOfGitignoreFiles >= 1)
         {
-            result += "Repository contains to many gitignore files, numbering " + numberOfGitignoreFiles + ". Please fix: " + "\n";
+            result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s)" + "\n";
         }
-        else if (numberOfGitignoreFiles == 1)
+        else
         {
-            result += "Repository contains a gitignore file: \u2705" + "\n";
-        }
-        if (numberOfGitignoreFiles == 0)
-        {
-            result += "Repository does not contain a gitignore file. Please fix: \ud83d\udd34" + "\n";
+            result += "\ud83d\udd34 Repository does not contain a gitignore file. Please fix" + "\n";
         }
         
         return result;
@@ -51,7 +51,7 @@ public class Checks
         foreach (var filePath in filePaths)
         {
             var filename = Path.GetFileName(filePath);
-            if (filename == "LICENSE" || filename == "LICENCE" || filename == "LICENSE.txt" || filename == "LICENSE.md")
+            if (filename.ToLower().Contains("license"))
             {
                 numberOfLicenseFiles += 1;
             }
@@ -59,15 +59,15 @@ public class Checks
         
         if (numberOfLicenseFiles > 1)
         {
-            result += "Repository contains to many License files, numbering " + numberOfLicenseFiles + ". Please fix: " + "\n";
+            result += "\ud83d\udfe1 Repository contains to many License files, numbering " + numberOfLicenseFiles + ". Please fix" + "\n";
         }
         else if (numberOfLicenseFiles == 1)
         {
-            result += "Repository contains a License file: \u2705" + "\n";
+            result += "\u2705 Repository contains a License file" + "\n";
         }
         if (numberOfLicenseFiles == 0)
         {
-            result += "Repository does not contain a License file. Please fix: \ud83d\udd34" + "\n";
+            result += "\ud83d\udd34 Repository does not contain a License file. Please fix" + "\n";
         }
         
         return result;
@@ -97,6 +97,41 @@ public class Checks
         }
 
 
+        return result;
+    }
+
+    public static string READMECheck(List<string> filePaths, string currentDirectory)
+    {
+        var result = "";
+
+        foreach (var filePath in filePaths)
+        {
+            var filename = Path.GetFileName(filePath);
+
+            if (filename.ToLower().Contains("readme"))
+            {
+                result += "\u2705 Repository contains a README file" + "\n";
+            }
+        }
+
+        if (result == "")
+        {
+            result += "\ud83d\udd34 Repository does not contain a README file. Please fix" + "\n";
+        }
+        return result;
+    }
+
+    public static string TestCheck(List<string> filePaths, string currentDirectory)
+    {
+        var result = "";
+        
+        return result;
+    }
+    
+    public static string WorkflowCheck(List<string> filePaths, string currentDirectory)
+    {
+        var result = "";
+        
         return result;
     }
 }

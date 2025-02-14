@@ -1,6 +1,6 @@
 ﻿namespace RepoLinter;
 
-public class getAllFiles
+public class GetAllFiles
 {
     static public List<string> AsList(string thePath)
     {
