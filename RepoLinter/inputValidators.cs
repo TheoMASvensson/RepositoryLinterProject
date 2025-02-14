@@ -4,7 +4,7 @@ public class URLValidator
 {
     public static bool IsValidURL(string url)
     {
-        // Check if 
+        // Check if input is empty
         if (string.IsNullOrWhiteSpace(url))
         {
             return false;

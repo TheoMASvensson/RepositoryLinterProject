@@ -1,4 +1,7 @@
-﻿public class Checks
+﻿using System.Diagnostics;
+
+
+public class Checks
 {
 
     public static string RunAllChecks(List<string> filePaths, string currentDirectory)
@@ -6,7 +9,7 @@
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
-        output += "";
+        //output += SecretCheck(filePaths, currentDirectory);
         return output;
     }
 
@@ -69,5 +72,31 @@
         
         return result;
     }
+    
+    public static string SecretCheck(List<string> filePaths, string currentDirectory)
+    {
+        var result = "";
+        
+        var p = new Process
+        {
+            StartInfo =
+            {
+                FileName = "trufflehog",
+                Arguments = $"",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            }
+        };
+        var started = p.Start();
 
+        if (!started)
+        {
+            throw new Exception("Failed to start truffle hog");
+        }
+
+
+        return result;
+    }
 }

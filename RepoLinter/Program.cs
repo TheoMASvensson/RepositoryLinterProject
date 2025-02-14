@@ -55,7 +55,16 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //{
                 //Console.WriteLine(filepath);
             //}
-
+            //try
+            //{
+            //    Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //    Environment.Exit(1);
+            //}
+            
             Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
             
         }, urlArg);
@@ -72,7 +81,16 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //{
             //    Console.WriteLine(filepath);
             //}
-            
+
+            //try
+            //{
+            //    Console.WriteLine(Checks.RunAllChecks(fileList, path));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //    Environment.Exit(1);
+            //}
             Console.WriteLine(Checks.RunAllChecks(fileList, path));
             
         }, pathArg);
