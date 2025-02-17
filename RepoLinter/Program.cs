@@ -81,7 +81,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //{
             //    Console.WriteLine(filepath);
             //}
-
+            
             //try
             //{
             //    Console.WriteLine(Checks.RunAllChecks(fileList, path));

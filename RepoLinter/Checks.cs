@@ -11,7 +11,7 @@ public class Checks
         output += LicenseCheck(filePaths, currentDirectory);
         //output += SecretCheck(filePaths, currentDirectory);
         output += READMECheck(filePaths, currentDirectory);
-        //output += TestCheck(filePaths, currentDirectory);
+        output += TestCheck(filePaths, currentDirectory);
         //output += WorkflowCheck(filePaths, currentDirectory);
         return output;
     }
@@ -124,6 +124,28 @@ public class Checks
     public static string TestCheck(List<string> filePaths, string currentDirectory)
     {
         var result = "";
+        var numberOfTestFiles = 0;
+        var testfiles = "";
+
+        foreach (var filePath in filePaths)
+        {
+            if (filePath.ToLower().Contains("test"))
+            {
+                numberOfTestFiles += 1;
+                testfiles += filePath + "\n";
+
+            }
+        }
+
+        if (numberOfTestFiles >= 1)
+        {
+            result += $"\u2705 Repository contains {numberOfTestFiles} test files, their full paths are: \n" + testfiles + "\n";
+        }
+
+        if (numberOfTestFiles == 0)
+        {
+            result += "\ud83d\udd34 Repository does not contain a test file. Please fix" + "\n";
+        }
         
         return result;
     }
