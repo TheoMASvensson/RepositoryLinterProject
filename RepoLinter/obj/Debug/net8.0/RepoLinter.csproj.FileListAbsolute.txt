@@ -29,3 +29,4 @@ C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.p
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.genruntimeconfig.cache
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\ref\RepoLinter.dll
 C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\obj\Debug\net8.0\RepoLinter.sourcelink.json
+C:\Users\theos\RiderProjects\RepoLinter\RepoLinter\bin\Debug\net8.0\Newtonsoft.Json.dll

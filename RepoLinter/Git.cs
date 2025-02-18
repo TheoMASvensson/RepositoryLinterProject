@@ -10,7 +10,7 @@ public class Git
     public Git(string url, string pathToGitRepository = "")
     {
         _url = url;
-        PathToGitRepository = pathToGitRepository == "" ? Path.Join(Directory.GetCurrentDirectory(), "git") : pathToGitRepository;
+        PathToGitRepository = pathToGitRepository == "" ? Path.Join(Directory.GetCurrentDirectory(), "temp") : pathToGitRepository;
     }
     public void Clone()
     {
@@ -19,7 +19,7 @@ public class Git
             StartInfo =
             {
                 FileName = "git",
-                Arguments = $"clone {_url} git",
+                Arguments = $"clone {_url} temp",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

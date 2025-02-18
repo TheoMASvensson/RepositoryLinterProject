@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using Newtonsoft.Json;
 
+namespace RepoLinter;
 
 public class Checks
 {
@@ -9,7 +11,7 @@ public class Checks
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
-        //output += SecretCheck(filePaths, currentDirectory);
+        output += SecretCheck(currentDirectory);
         output += READMECheck(filePaths, currentDirectory);
         output += TestCheck(filePaths, currentDirectory);
         //output += WorkflowCheck(filePaths, currentDirectory);
@@ -73,29 +75,34 @@ public class Checks
         return result;
     }
     
-    public static string SecretCheck(List<string> filePaths, string currentDirectory)
+    public static string SecretCheck(string currentDirectory)
     {
         var result = "";
+
+        var trufflehogOutput = TruffleHogStuff.RunProcess(currentDirectory);
         
-        var p = new Process
+        if (!string.IsNullOrEmpty(trufflehogOutput))
         {
-            StartInfo =
+            var findings = JsonConvert.DeserializeObject<List<Finding>>(trufflehogOutput);
+            
+            result += "\ud83d\udd34 Repository contains " + findings.Count + " secrets. Please fix" + "\n"; 
+            result += "TruffleHog Findings: \n";
+            result += "==================== \n";
+
+            foreach (var finding in findings)
             {
-                FileName = "trufflehog",
-                Arguments = $"",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
+                result += $"Type: {finding.DetectorName} \n";
+                result += ($"File: {finding.File} \n");
+                result += ($"Line: {finding.Line} \n");
+                result += ($"Secret: {finding.Raw} \n");
+                result += ($"Description: {finding.Description} \n");
+                result += ("--------------------- \n");
             }
-        };
-        var started = p.Start();
-
-        if (!started)
-        {
-            throw new Exception("Failed to start truffle hog");
         }
-
+        else
+        {
+            result += "\u2705 Repository does not contain any secrets \n";
+        }
 
         return result;
     }
