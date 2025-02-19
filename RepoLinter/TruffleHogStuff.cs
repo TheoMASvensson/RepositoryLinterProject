@@ -7,12 +7,13 @@ class TruffleHogStuff
 {
     public string RunProcess(string directory)
     {
+        
         var p = new Process
         {
             StartInfo =
             {
                 FileName = "trufflehog",
-                Arguments = $"filesystem {directory} --json",
+                Arguments = $"filesystem \"{directory}\" --json",
                 WorkingDirectory = directory,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
@@ -27,9 +28,11 @@ class TruffleHogStuff
             throw new Exception("Failed to start trufflehog");
         }
         
-        p.WaitForExit();
-
         var output = p.StandardOutput.ReadToEnd();
+        
+        
+        p.WaitForExit();
+        
 
         Console.WriteLine("Exit code:" + p.ExitCode);
         

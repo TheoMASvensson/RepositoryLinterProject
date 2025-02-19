@@ -9,11 +9,11 @@ public class Checks
     public static string RunAllChecks(List<string> filePaths, string currentDirectory)
     {
         var output = "";
-        output += GitignoreCheck(filePaths, currentDirectory);
-        output += LicenseCheck(filePaths, currentDirectory);
-        //output += SecretCheck(currentDirectory);
-        output += READMECheck(filePaths, currentDirectory);
-        output += TestCheck(filePaths, currentDirectory);
+        //output += GitignoreCheck(filePaths, currentDirectory);
+        //output += LicenseCheck(filePaths, currentDirectory);
+        output += SecretCheck(currentDirectory);
+        //output += READMECheck(filePaths, currentDirectory);
+        //output += TestCheck(filePaths, currentDirectory);
         //output += WorkflowCheck(filePaths, currentDirectory);
         return output;
     }
@@ -161,6 +161,24 @@ public class Checks
     public static string WorkflowCheck(List<string> filePaths, string currentDirectory)
     {
         var result = "";
+        var numberOfWorkflowFiles = 0;
+
+        foreach (var filePath in filePaths)
+        {
+            if (filePath.ToLower().Contains(Path.Join(".github", "workflows")))
+            {
+                numberOfWorkflowFiles += 1;
+            }
+        }
+
+        if (numberOfWorkflowFiles >= 1)
+        {
+            result += $"\u2705 Repository contains {numberOfWorkflowFiles} workflow file(s)" + "\n";
+        }
+        else
+        {
+            result += "\ud83d\udd34 Repository does not contain workflow file(s). Please fix \n";
+        }
         
         return result;
     }
