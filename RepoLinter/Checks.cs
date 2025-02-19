@@ -11,7 +11,7 @@ public class Checks
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
-        output += SecretCheck(currentDirectory);
+        //output += SecretCheck(currentDirectory);
         output += READMECheck(filePaths, currentDirectory);
         output += TestCheck(filePaths, currentDirectory);
         //output += WorkflowCheck(filePaths, currentDirectory);
@@ -79,7 +79,8 @@ public class Checks
     {
         var result = "";
 
-        var trufflehogOutput = TruffleHogStuff.RunProcess(currentDirectory);
+        var trufflehog = new TruffleHogStuff();
+        var trufflehogOutput = trufflehog.RunProcess(currentDirectory);
         
         if (!string.IsNullOrEmpty(trufflehogOutput))
         {
@@ -87,7 +88,7 @@ public class Checks
             
             result += "\ud83d\udd34 Repository contains " + findings.Count + " secrets. Please fix" + "\n"; 
             result += "TruffleHog Findings: \n";
-            result += "==================== \n";
+            result += "-------------------- \n";
 
             foreach (var finding in findings)
             {

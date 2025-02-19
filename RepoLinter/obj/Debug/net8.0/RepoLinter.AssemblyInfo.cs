@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RepoLinter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+176a549de9eab30fa43233806bea9a6869274549")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d804e09bdb860aa3bba2064850aab635e9edc73")]
 [assembly: System.Reflection.AssemblyProductAttribute("RepoLinter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RepoLinter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -5,7 +5,7 @@ namespace RepoLinter;
 
 class TruffleHogStuff
 {
-    public static string RunProcess(string directory)
+    public string RunProcess(string directory)
     {
         var p = new Process
         {
@@ -13,6 +13,7 @@ class TruffleHogStuff
             {
                 FileName = "trufflehog",
                 Arguments = $"filesystem {directory} --json",
+                WorkingDirectory = directory,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -25,9 +26,12 @@ class TruffleHogStuff
         {
             throw new Exception("Failed to start trufflehog");
         }
-        var output = p.StandardOutput.ReadToEnd();
         
         p.WaitForExit();
+
+        var output = p.StandardOutput.ReadToEnd();
+
+        Console.WriteLine("Exit code:" + p.ExitCode);
         
         return output;
     }
