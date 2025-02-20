@@ -34,7 +34,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
-            var git = new Git(url);
+            var git = new Git(url, "/tmp/repolinter/git");
             
             // Try to clone repository from given url
             try

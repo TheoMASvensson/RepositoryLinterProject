@@ -7,17 +7,25 @@ class TruffleHogStuff
 {
     public string RunProcess(string directory)
     {
+        Directory.CreateDirectory("/tmp/repolinter/git");
+        
+        var trufflehogExists = File.Exists("/usr/local/bin/trufflehog");
+        
+        if (!trufflehogExists)
+        {
+            throw new Exception("Trufflehog is not installed");
+        }
         
         var p = new Process
         {
-            StartInfo =
+            StartInfo = new ProcessStartInfo
             {
-                FileName = "trufflehog",
-                Arguments = $"filesystem \"{directory}\" --json",
+                FileName = "/usr/local/bin/trufflehog",
+                Arguments = $"filesystem {directory} --json",
                 WorkingDirectory = directory,
-                UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                UseShellExecute = false,
                 CreateNoWindow = true
             }
         };
@@ -28,10 +36,9 @@ class TruffleHogStuff
             throw new Exception("Failed to start trufflehog");
         }
         
-        var output = p.StandardOutput.ReadToEnd();
-        
         p.WaitForExit();
         
+        var output = p.StandardOutput.ReadToEnd();
 
         Console.WriteLine("Exit code:" + p.ExitCode);
         

@@ -7,10 +7,10 @@ public class Git
     private readonly string _url;
     public readonly string PathToGitRepository;
 
-    public Git(string url, string pathToGitRepository = "")
+    public Git(string url, string pathToGitRepository = "/tmp/gitrepolinter")
     {
         _url = url;
-        PathToGitRepository = pathToGitRepository == "" ? Path.Join(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "temp") : pathToGitRepository;
+        PathToGitRepository = pathToGitRepository + "/" + Path.GetFileName(_url);
     }
     public void Clone()
     {
