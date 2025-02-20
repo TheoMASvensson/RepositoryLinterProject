@@ -9,12 +9,12 @@ public class Checks
     public static string RunAllChecks(List<string> filePaths, string currentDirectory)
     {
         var output = "";
-        //output += GitignoreCheck(filePaths, currentDirectory);
-        //output += LicenseCheck(filePaths, currentDirectory);
+        output += GitignoreCheck(filePaths, currentDirectory);
+        output += LicenseCheck(filePaths, currentDirectory);
         output += SecretCheck(currentDirectory);
-        //output += READMECheck(filePaths, currentDirectory);
-        //output += TestCheck(filePaths, currentDirectory);
-        //output += WorkflowCheck(filePaths, currentDirectory);
+        output += READMECheck(filePaths, currentDirectory);
+        output += TestCheck(filePaths, currentDirectory);
+        output += WorkflowCheck(filePaths, currentDirectory);
         return output;
     }
 
@@ -22,6 +22,8 @@ public class Checks
     {
         var result = "";
         var numberOfGitignoreFiles = 0;
+        var emptyGitignoreFiles = "";
+        var numberOfEmptyGitignoreFiles = 0;
 
         foreach (var filePath in filePaths)
         {
@@ -29,13 +31,30 @@ public class Checks
             if (filename == ".gitignore")
             {
                 numberOfGitignoreFiles += 1;
+                
+                string content = File.ReadAllText(filePath);
+                if (string.IsNullOrEmpty(content))
+                {
+                    numberOfEmptyGitignoreFiles += 1;
+                    emptyGitignoreFiles += filePath + "\n";
+                }
             }
         }
 
         
         if (numberOfGitignoreFiles >= 1)
         {
-            result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s)" + "\n";
+            if (numberOfEmptyGitignoreFiles >= 1)
+            {
+                result += $"\ud83d\udfe1 Repository contains {numberOfGitignoreFiles} gitignore files, " +
+                          $"but {numberOfEmptyGitignoreFiles} gitignore file(s) is/are empty. These are: \n"
+                          + emptyGitignoreFiles;
+            }
+            else
+            {
+                result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s)" + "\n";
+            }
+            
         }
         else
         {

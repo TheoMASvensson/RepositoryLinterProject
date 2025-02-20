@@ -30,7 +30,6 @@ class TruffleHogStuff
         
         var output = p.StandardOutput.ReadToEnd();
         
-        
         p.WaitForExit();
         
 
