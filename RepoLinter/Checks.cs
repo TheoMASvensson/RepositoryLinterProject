@@ -130,6 +130,7 @@ public class Checks
     public static string READMECheck(List<string> filePaths, string currentDirectory)
     {
         var result = "";
+        var numberOfReadMeFiles = 0;
 
         foreach (var filePath in filePaths)
         {
@@ -137,11 +138,16 @@ public class Checks
 
             if (filename.ToLower().Contains("readme"))
             {
-                result += "\u2705 Repository contains a README file" + "\n";
+                numberOfReadMeFiles += 1;
             }
         }
 
-        if (result == "")
+        if (numberOfReadMeFiles >= 1)
+        {
+            result += $"\u2705 Repository contains {numberOfReadMeFiles} README file(s)" + "\n";
+        }
+
+        if (numberOfReadMeFiles == 0)
         {
             result += "\ud83d\udd34 Repository does not contain a README file. Please fix" + "\n";
         }
