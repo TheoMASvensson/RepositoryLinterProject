@@ -22,6 +22,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
         pathArg.AddValidator((path) =>
         {
             if (!pathValidator.isValidPath(path.Tokens[0].Value)){
+                Console.WriteLine(Directory.GetCurrentDirectory());
                 path.ErrorMessage = $"Invalid Path: {path.Tokens[0].Value}";
             }
             
