@@ -154,19 +154,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\theos\\.nuget\\packages\\": {}
+    "/home/theo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theos\\RiderProjects\\RepoLinter\\RepoLinter\\RepoLinter.csproj",
+      "projectUniqueName": "/home/theo/Desktop/RepositoryLinterProject/RepoLinter/RepoLinter.csproj",
       "projectName": "RepoLinter",
-      "projectPath": "C:\\Users\\theos\\RiderProjects\\RepoLinter\\RepoLinter\\RepoLinter.csproj",
-      "packagesPath": "C:\\Users\\theos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\theos\\RiderProjects\\RepoLinter\\RepoLinter\\obj\\",
+      "projectPath": "/home/theo/Desktop/RepositoryLinterProject/RepoLinter/RepoLinter.csproj",
+      "packagesPath": "/home/theo/.nuget/packages/",
+      "outputPath": "/home/theo/Desktop/RepositoryLinterProject/RepoLinter/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\theos\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/theo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -220,7 +220,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/theo/.dotnet/sdk/8.0.406/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
