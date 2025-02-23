@@ -1,0 +1,33 @@
+﻿@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Container Diagram for Git Repository Linter
+
+Person(personAlias, "customer", "Individual that wants to know if a certain GitHub repository is following best pratices")
+
+System_Ext(terminalAlias, "Terminal")
+
+System_Boundary(linter, "Repository Linter") {
+  System(parserAlias, "Parser", "Takes in and parses userinput")
+  System(inputAlias, "Inputvalidator", "Checks if input path or url is valid")
+  System(handlerAlias, "Sethandlers", "Handles the different inputs(one sethandler for url or path)")
+  System(checkAlias, "Checks", "Performs all checks")
+  
+  System(truffleAlias, "Trufflehog", "Performs a scan for secrets")
+}
+
+Rel(personAlias, terminalAlias, "User inputs either a url or path")
+Rel(terminalAlias, parserAlias, "Sends input to be parsed")
+Rel(parserAlias, inputAlias, "Uses in order to validate parsed input")
+Rel(inputAlias, handlerAlias, "When input has been validated sends input to sethandler")
+Rel(handlerAlias, checkAlias, "Uses in order to run all the desired checks")
+Rel(checkAlias, truffleAlias, "Uses to perform a scan for secrets")
+Rel(handlerAlias, terminalAlias, "Uses in order to present results to user")
+Rel(terminalAlias, personAlias, "Terminal presents results to user")
+
+System_Ext(git, "Git", "Version Control Service")
+System_Ext(githost, "Git Repository Hoster", "A service that hosts Git Repos")
+Rel(handlerAlias, git, "Talks to in order to be able to clone repository from url")
+Rel(git, githost, "Uses to clone Repository on Device")
+
+@enduml
