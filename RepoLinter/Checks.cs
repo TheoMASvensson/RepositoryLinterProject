@@ -11,7 +11,7 @@ public class Checks
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
-        output += SecretCheck(currentDirectory);
+        //output += SecretCheck(currentDirectory);
         output += READMECheck(filePaths, currentDirectory);
         output += TestCheck(filePaths, currentDirectory);
         output += WorkflowCheck(filePaths, currentDirectory);
@@ -172,7 +172,7 @@ public class Checks
 
         if (numberOfTestFiles >= 1)
         {
-            result += $"\u2705 Repository contains {numberOfTestFiles} test files, their full paths are: \n" + testfiles + "\n";
+            result += $"\u2705 Repository contains {numberOfTestFiles} test files, their full paths are: \n" + testfiles;
         }
 
         if (numberOfTestFiles == 0)
@@ -187,18 +187,21 @@ public class Checks
     {
         var result = "";
         var numberOfWorkflowFiles = 0;
+        var workflowFiles = "";
 
         foreach (var filePath in filePaths)
         {
             if (filePath.ToLower().Contains(Path.Join(".github", "workflows")))
             {
                 numberOfWorkflowFiles += 1;
+                workflowFiles += filePath + "\n";
             }
         }
 
         if (numberOfWorkflowFiles >= 1)
         {
-            result += $"\u2705 Repository contains {numberOfWorkflowFiles} workflow file(s)" + "\n";
+            result += $"\u2705 Repository contains {numberOfWorkflowFiles} workflow file(s), they are: " + "\n";
+            result += workflowFiles;
         }
         else
         {
