@@ -11,7 +11,7 @@ public class Checks
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
-        //output += SecretCheck(currentDirectory);
+        output += SecretCheck(currentDirectory);
         output += READMECheck(filePaths, currentDirectory);
         output += TestCheck(filePaths, currentDirectory);
         output += WorkflowCheck(filePaths, currentDirectory);

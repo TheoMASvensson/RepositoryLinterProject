@@ -85,7 +85,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
             try
             {
-                //Console.WriteLine(git.GetCommitsAndContributors(path));
+                Console.WriteLine(git.GetCommitsAndContributors(path));
                 Console.WriteLine(Checks.RunAllChecks(fileList, path));
             }
             catch (Exception e)
