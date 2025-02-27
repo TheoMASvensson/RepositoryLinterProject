@@ -20,8 +20,8 @@ class TruffleHogStuff
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = "/usr/local/bin/trufflehog",
-                Arguments = $"filesystem {directory} --json",
+                FileName = "sudo",
+                Arguments = $"/usr/local/bin/trufflehog filesystem {directory} --json",
                 WorkingDirectory = directory,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -39,8 +39,11 @@ class TruffleHogStuff
         p.WaitForExit();
         
         var output = p.StandardOutput.ReadToEnd();
+        
+        //var errorOutput = p.StandardError.ReadToEnd();
+        //Console.WriteLine("Error output: " + errorOutput);
 
-        Console.WriteLine("Exit code:" + p.ExitCode);
+        //Console.WriteLine("Exit code:" + p.ExitCode);
         
         return output;
     }
