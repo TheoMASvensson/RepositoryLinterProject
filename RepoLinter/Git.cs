@@ -44,7 +44,7 @@ public class Git
         }
     }
 
-    public string GetCommitCount(string folderPath)
+    public string GetCommitsAndContributors(string folderPath)
     {
         var p = new Process
         {

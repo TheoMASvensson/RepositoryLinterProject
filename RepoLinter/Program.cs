@@ -65,7 +65,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //    Console.WriteLine(e.Message);
             //    Environment.Exit(1);
             //}
-            Console.WriteLine(git.GetCommitCount("/tmp/repolinter/git"));
+            Console.WriteLine(git.GetCommitsAndContributors("/tmp/repolinter/git"));
             Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
             
         }, urlArg);
@@ -86,7 +86,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
             try
             {
-                Console.WriteLine(git.GetCommitCount(path));
+                Console.WriteLine(git.GetCommitsAndContributors(path));
                 Console.WriteLine(Checks.RunAllChecks(fileList, path));
             }
             catch (Exception e)
