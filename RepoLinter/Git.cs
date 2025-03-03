@@ -7,14 +7,22 @@ public class Git
     private readonly string _url;
     public readonly string PathToGitRepository;
 
-    public Git(string url = "", string pathToGitRepository = "/tmp/gitrepolinter")
+    public Git(string url = "", string pathToGitRepository = "")
     {
         _url = url;
-        PathToGitRepository = pathToGitRepository;
+        if (pathToGitRepository == "")
+        {
+            PathToGitRepository = "/tmp/gitrepolinter";
+        }
+        else
+        {
+            PathToGitRepository = pathToGitRepository;
+        }
         //+ "/" + Path.GetFileName(_url);
     }
     public void Clone()
     {
+        Console.WriteLine($"{PathToGitRepository}");
         if (_url == "")
         {
             throw new Exception("URL is empty");
@@ -25,6 +33,7 @@ public class Git
             {
                 FileName = "git",
                 Arguments = $"clone {_url} {PathToGitRepository}",
+                //WorkingDirectory = PathToGitRepository,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -34,7 +43,7 @@ public class Git
         var started = p.Start();
         if (!started)
         {
-            throw new Exception("Failed to clone git repository");
+            throw new Exception("Failed to start cloning of git repository");
         }
         p.WaitForExit();
 
@@ -42,6 +51,8 @@ public class Git
         {
             throw new Exception("Failed to clone git repository");
         }
+        
+        Console.WriteLine($"Cloned git repository to: {PathToGitRepository}");
     }
 
     public string GetCommitsAndContributors(string folderPath)

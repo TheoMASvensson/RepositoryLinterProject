@@ -35,7 +35,24 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
-            var git = new Git(url);
+            
+            List<string> lines = new List<string>(File.ReadAllLines("ConfigFile.txt"));
+            var folderPath = "";
+            if (lines[0] != "")
+            {
+                folderPath = lines[0];
+            }
+
+            var i = 1;
+            var ignoredChecks = new List<string>();
+
+            while (i < lines.Count)
+            {
+                ignoredChecks.Add(lines[i]);
+                i++;
+            }
+            
+            var git = new Git(url, folderPath);
             
             // Try to clone repository from given url
             try
@@ -58,7 +75,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //}
             try
             {
-                Console.WriteLine(git.GetCommitsAndContributors("/tmp/gitrepolinter"));
+                Console.WriteLine(git.GetCommitsAndContributors(folderPath));
                 Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
             }
             catch (Exception e)
