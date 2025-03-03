@@ -8,6 +8,8 @@ public class Checks
 
     public static string RunAllChecks(List<string> filePaths, string currentDirectory)
     {
+        var passedChecks = new List<string>();
+        var failedChecks = new List<string>();
         var output = "";
         output += GitignoreCheck(filePaths, currentDirectory);
         output += LicenseCheck(filePaths, currentDirectory);
