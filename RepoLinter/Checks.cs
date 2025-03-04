@@ -6,17 +6,37 @@ namespace RepoLinter;
 public class Checks
 {
 
-    public static string RunAllChecks(List<string> filePaths, string currentDirectory)
+    public static string RunAllChecks(List<string> filePaths, string currentDirectory, List<string> ignoredChecks)
     {
         var passedChecks = new List<string>();
         var failedChecks = new List<string>();
         var output = "";
-        output += GitignoreCheck(filePaths, currentDirectory);
-        output += LicenseCheck(filePaths, currentDirectory);
-        //output += SecretCheck(currentDirectory);
-        output += READMECheck(filePaths, currentDirectory);
-        //output += TestCheck(filePaths, currentDirectory);
-        //output += WorkflowCheck(filePaths, currentDirectory);
+
+        if (!ignoredChecks.Contains("gitignore"))
+        {
+            output += GitignoreCheck(filePaths, currentDirectory);
+        }
+        if (!ignoredChecks.Contains("license"))
+        {
+            output += LicenseCheck(filePaths, currentDirectory);
+        }
+        if (!ignoredChecks.Contains("secret"))
+        {
+            output += SecretCheck(currentDirectory);
+        }
+        if (!ignoredChecks.Contains("readme"))
+        {
+            output += READMECheck(filePaths, currentDirectory);
+        }
+        if (!ignoredChecks.Contains("test"))
+        {
+            output += TestCheck(filePaths, currentDirectory);
+        }
+        if (!ignoredChecks.Contains("workflow"))
+        {
+            output += WorkflowCheck(filePaths, currentDirectory);
+        }
+        
         return output;
     }
 

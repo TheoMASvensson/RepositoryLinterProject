@@ -22,13 +22,13 @@ public class Git
     }
     public void Clone()
     {
-        Console.WriteLine($"{PathToGitRepository}");
+        //Console.WriteLine($"{PathToGitRepository}");
         if (_url == "")
         {
             throw new Exception("URL is empty");
         }
 
-        Console.WriteLine(Directory.Exists(PathToGitRepository));
+        //Console.WriteLine(Directory.Exists(PathToGitRepository));
         
         
         var p = new Process
@@ -37,7 +37,6 @@ public class Git
             {
                 FileName = "git",
                 Arguments = $"clone {_url} {PathToGitRepository}",
-                //WorkingDirectory = PathToGitRepository,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

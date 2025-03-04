@@ -1,1 +1,3 @@
-﻿C:\Users\theos\testfolder\gitrepo
+﻿C:\Users\theos\Desktop\testfolder
+secret
+test

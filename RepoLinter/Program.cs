@@ -52,6 +52,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
                 i++;
             }
             
+            
             var git = new Git(url, folderPath);
             
             // Try to clone repository from given url
@@ -76,7 +77,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(folderPath));
-                Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath));
+                Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath, ignoredChecks));
             }
             catch (Exception e)
             {
@@ -90,6 +91,18 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
         pathCommand.SetHandler((path)=> {
             Console.WriteLine($"You entered path: {path}");
+            
+            List<string> lines = new List<string>(File.ReadAllLines("ConfigFile.txt"));
+            
+            var i = 1;
+            var ignoredChecks = new List<string>();
+
+            while (i < lines.Count)
+            {
+                ignoredChecks.Add(lines[i]);
+                i++;
+            }
+            
             var git = new Git("", path);
             
             // Get all files in repository as a list
@@ -103,7 +116,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(path));
-                Console.WriteLine(Checks.RunAllChecks(fileList, path));
+                Console.WriteLine(Checks.RunAllChecks(fileList, path, ignoredChecks));
             }
             catch (Exception e)
             {
