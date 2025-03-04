@@ -27,6 +27,10 @@ public class Git
         {
             throw new Exception("URL is empty");
         }
+
+        Console.WriteLine(Directory.Exists(PathToGitRepository));
+        
+        
         var p = new Process
         {
             StartInfo =
@@ -45,12 +49,14 @@ public class Git
         {
             throw new Exception("Failed to start cloning of git repository");
         }
+        
         p.WaitForExit();
 
-        if (!Directory.Exists(PathToGitRepository))
+        if (p.ExitCode != 0)
         {
-            throw new Exception("Failed to clone git repository");
+            throw new Exception("Failed to clone of git repository. Exit code not 0.");
         }
+        
         
         Console.WriteLine($"Cloned git repository to: {PathToGitRepository}");
     }
