@@ -1,3 +1,4 @@
-﻿C:\Users\theos\Desktop\testfolder
-secret
+﻿/home/theo/Desktop/repofolder
 test
+workflow
+license

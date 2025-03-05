@@ -12,6 +12,7 @@ public class Git
         _url = url;
         if (pathToGitRepository == "")
         {
+            Directory.CreateDirectory("tmp/gitrepolinter");
             PathToGitRepository = "/tmp/gitrepolinter";
         }
         else

@@ -7,7 +7,7 @@ class TruffleHogStuff
 {
     public string RunProcess(string directory)
     {
-        Directory.CreateDirectory("/tmp/repolinter/git");
+        //Directory.CreateDirectory("/tmp/repolinter/git");
         
         var trufflehogExists = File.Exists("/usr/local/bin/trufflehog");
         
@@ -20,8 +20,8 @@ class TruffleHogStuff
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = "sudo",
-                Arguments = $"/usr/local/bin/trufflehog filesystem {directory} --json",
+                FileName = "trufflehog",
+                Arguments = $"filesystem {directory} --json --no-update",
                 WorkingDirectory = directory,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
