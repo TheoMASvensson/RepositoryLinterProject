@@ -27,9 +27,6 @@ public class Git
         {
             throw new Exception("URL is empty");
         }
-
-        //Console.WriteLine(Directory.Exists(PathToGitRepository));
-        
         
         var p = new Process
         {

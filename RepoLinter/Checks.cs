@@ -1,24 +1,23 @@
-﻿using System.Diagnostics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace RepoLinter;
 
 public class Checks
 {
+    //List<string> passedChecks = new List<string>();
+    //List<string> failedChecks = new List<string>();
 
     public static string RunAllChecks(List<string> filePaths, string currentDirectory, List<string> ignoredChecks)
     {
-        var passedChecks = new List<string>();
-        var failedChecks = new List<string>();
         var output = "";
 
         if (!ignoredChecks.Contains("gitignore"))
         {
-            output += GitignoreCheck(filePaths, currentDirectory);
+            output += GitignoreCheck(filePaths);
         }
         if (!ignoredChecks.Contains("license"))
         {
-            output += LicenseCheck(filePaths, currentDirectory);
+            output += LicenseCheck(filePaths);
         }
         if (!ignoredChecks.Contains("secret"))
         {
@@ -26,21 +25,21 @@ public class Checks
         }
         if (!ignoredChecks.Contains("readme"))
         {
-            output += READMECheck(filePaths, currentDirectory);
+            output += ReadmeCheck(filePaths);
         }
         if (!ignoredChecks.Contains("test"))
         {
-            output += TestCheck(filePaths, currentDirectory);
+            output += TestCheck(filePaths);
         }
         if (!ignoredChecks.Contains("workflow"))
         {
-            output += WorkflowCheck(filePaths, currentDirectory);
+            output += WorkflowCheck(filePaths);
         }
         
         return output;
     }
 
-    public static string GitignoreCheck(List<string> filePaths, string currentDirectory)
+    static string GitignoreCheck(List<string> filePaths)
     {
         var result = "";
         var numberOfGitignoreFiles = 0;
@@ -86,7 +85,7 @@ public class Checks
         return result;
     }
 
-    public static string LicenseCheck(List<string> filePaths, string currentDirectory)
+    static string LicenseCheck(List<string> filePaths)
     {
         var result = "";
         var numberOfLicenseFiles = 0;
@@ -116,7 +115,7 @@ public class Checks
         return result;
     }
     
-    public static string SecretCheck(string currentDirectory)
+    static string SecretCheck(string currentDirectory)
     {
         var result = "";
 
@@ -127,11 +126,11 @@ public class Checks
         {
             var findings = JsonConvert.DeserializeObject<List<Finding>>(trufflehogOutput);
             
-            result += "\ud83d\udd34 Repository contains " + findings.Count + " secrets. Please fix" + "\n"; 
+            result += "\ud83d\udd34 Repository contains " + findings?.Count + " secrets. Please fix" + "\n"; 
             result += "TruffleHog Findings: \n";
             result += "-------------------- \n";
 
-            foreach (var finding in findings)
+            foreach (var finding in findings!)
             {
                 result += $"Type: {finding.DetectorName} \n";
                 result += ($"File: {finding.File} \n");
@@ -149,7 +148,7 @@ public class Checks
         return result;
     }
 
-    public static string READMECheck(List<string> filePaths, string currentDirectory)
+    static string ReadmeCheck(List<string> filePaths)
     {
         var result = "";
         var numberOfReadMeFiles = 0;
@@ -176,7 +175,7 @@ public class Checks
         return result;
     }
 
-    public static string TestCheck(List<string> filePaths, string currentDirectory)
+    static string TestCheck(List<string> filePaths)
     {
         var result = "";
         var numberOfTestFiles = 0;
@@ -205,7 +204,7 @@ public class Checks
         return result;
     }
     
-    public static string WorkflowCheck(List<string> filePaths, string currentDirectory)
+    static string WorkflowCheck(List<string> filePaths)
     {
         var result = "";
         var numberOfWorkflowFiles = 0;

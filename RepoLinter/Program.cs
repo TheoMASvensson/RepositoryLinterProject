@@ -62,7 +62,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             }
             catch (Exception e) // Handle errors when cloning
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Error cloning: " + e.Message);
                 Environment.Exit(1);
             }
             
