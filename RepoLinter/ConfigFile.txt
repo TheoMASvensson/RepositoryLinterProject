@@ -1,4 +1,0 @@
-﻿/home/theo/Desktop/repofolder
-test
-workflow
-license

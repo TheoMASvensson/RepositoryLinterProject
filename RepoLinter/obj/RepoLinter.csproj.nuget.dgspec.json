@@ -50,6 +50,10 @@
             "System.CommandLine": {
               "target": "Package",
               "version": "[2.0.0-beta4.22272.1, )"
+            },
+            "Tomlyn": {
+              "target": "Package",
+              "version": "[0.18.0, )"
             }
           },
           "imports": [

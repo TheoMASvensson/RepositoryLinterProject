@@ -94,3 +94,4 @@ C:/Users/theos/RiderProjects/RepoLinter/RepoLinter/bin/Debug/net8.0/Newtonsoft.J
 /home/theo/Desktop/RepositoryLinterProject/RepoLinter/obj/Debug/net8.0/RepoLinter.pdb
 /home/theo/Desktop/RepositoryLinterProject/RepoLinter/obj/Debug/net8.0/RepoLinter.genruntimeconfig.cache
 /home/theo/Desktop/RepositoryLinterProject/RepoLinter/obj/Debug/net8.0/ref/RepoLinter.dll
+/home/theo/Desktop/RepositoryLinterProject/RepoLinter/bin/Debug/net8.0/Tomlyn.dll

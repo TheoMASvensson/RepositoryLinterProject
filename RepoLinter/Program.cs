@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
-using System.Threading.Channels;
 using RepoLinter;
+using Tomlyn;
+using Tomlyn.Model;
 
 var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or path to a repository and validates it.");
 
@@ -36,24 +37,23 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
             
-            List<string> lines = new List<string>(File.ReadAllLines("ConfigFile.txt"));
-            var folderPath = "";
-            if (lines[0] != "")
-            {
-                folderPath = lines[0];
-            }
-
-            var i = 1;
-            var ignoredChecks = new List<string>();
-
-            while (i < lines.Count)
-            {
-                ignoredChecks.Add(lines[i]);
-                i++;
-            }
+            string tomlContent = File.ReadAllText("ConfigFile.toml");
             
+            TomlTable tomlTable = Toml.ToModel(tomlContent);
             
-            var git = new Git(url, folderPath);
+            string ?thePath = tomlTable["pathtofolder"] as string;
+            
+            var theChecks = new List<string>();
+            
+            TomlTable checkTable = (TomlTable)tomlTable["tests"];
+            var gitignore = checkTable["gitignore"] as string; theChecks.Add(gitignore!);
+            var license = checkTable["license"] as string; theChecks.Add(license!);
+            var secret = checkTable["secret"] as string; theChecks.Add(secret!);
+            var readme = checkTable["readme"] as string; theChecks.Add(readme!);
+            var test = checkTable["test"] as string; theChecks.Add(test!);
+            var workflow = checkTable["workflow"] as string; theChecks.Add(workflow!);
+            
+            var git = new Git(url, thePath!);
             
             // Try to clone repository from given url
             try
@@ -76,8 +76,8 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             //}
             try
             {
-                Console.WriteLine(git.GetCommitsAndContributors(folderPath));
-                Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath, ignoredChecks));
+                Console.WriteLine(git.GetCommitsAndContributors(thePath!));
+                Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath,theChecks));
             }
             catch (Exception e)
             {
@@ -92,16 +92,19 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
         pathCommand.SetHandler((path)=> {
             Console.WriteLine($"You entered path: {path}");
             
-            List<string> lines = new List<string>(File.ReadAllLines("ConfigFile.txt"));
+            string tomlContent = File.ReadAllText("ConfigFile.toml");
             
-            var i = 1;
-            var ignoredChecks = new List<string>();
-
-            while (i < lines.Count)
-            {
-                ignoredChecks.Add(lines[i]);
-                i++;
-            }
+            TomlTable tomlTable = Toml.ToModel(tomlContent);
+            
+            var theChecks = new List<string>();
+            
+            TomlTable checkTable = (TomlTable)tomlTable["tests"];
+            var gitignore = checkTable["gitignore"] as string; theChecks.Add(gitignore!);
+            var license = checkTable["license"] as string; theChecks.Add(license!);
+            var secret = checkTable["secret"] as string; theChecks.Add(secret!);
+            var readme = checkTable["readme"] as string; theChecks.Add(readme!);
+            var test = checkTable["test"] as string; theChecks.Add(test!);
+            var workflow = checkTable["workflow"] as string; theChecks.Add(workflow!);
             
             var git = new Git("", path);
             
@@ -116,7 +119,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(path));
-                Console.WriteLine(Checks.RunAllChecks(fileList, path, ignoredChecks));
+                Console.WriteLine(Checks.RunAllChecks(fileList, path, theChecks));
             }
             catch (Exception e)
             {

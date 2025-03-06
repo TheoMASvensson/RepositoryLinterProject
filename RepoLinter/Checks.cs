@@ -11,27 +11,27 @@ public class Checks
     {
         var output = "";
 
-        if (!ignoredChecks.Contains("gitignore"))
+        if (ignoredChecks[0] == "true")
         {
             output += GitignoreCheck(filePaths);
         }
-        if (!ignoredChecks.Contains("license"))
+        if (ignoredChecks[1] == "true")
         {
             output += LicenseCheck(filePaths);
         }
-        if (!ignoredChecks.Contains("secret"))
+        if (ignoredChecks[2] == "true")
         {
             output += SecretCheck(currentDirectory);
         }
-        if (!ignoredChecks.Contains("readme"))
+        if (ignoredChecks[3] == "true")
         {
             output += ReadmeCheck(filePaths);
         }
-        if (!ignoredChecks.Contains("test"))
+        if (ignoredChecks[4] == "true")
         {
             output += TestCheck(filePaths);
         }
-        if (!ignoredChecks.Contains("workflow"))
+        if (ignoredChecks[5] == "true")
         {
             output += WorkflowCheck(filePaths);
         }
@@ -186,7 +186,7 @@ public class Checks
             if (filePath.ToLower().Contains("test"))
             {
                 numberOfTestFiles += 1;
-                testfiles += filePath + "\n";
+                testfiles += "  " + filePath + "\n";
 
             }
         }
