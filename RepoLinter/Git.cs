@@ -17,6 +17,7 @@ public class Git
         }
         else
         {
+            Directory.CreateDirectory(pathToGitRepository);
             PathToGitRepository = pathToGitRepository;
         }
         //+ "/" + Path.GetFileName(_url);
@@ -28,6 +29,8 @@ public class Git
         {
             throw new Exception("URL is empty");
         }
+        
+        Directory.Delete(PathToGitRepository, true);
         
         var p = new Process
         {
