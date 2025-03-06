@@ -20,11 +20,9 @@ public class Git
             Directory.CreateDirectory(pathToGitRepository);
             PathToGitRepository = pathToGitRepository;
         }
-        //+ "/" + Path.GetFileName(_url);
     }
     public void Clone()
     {
-        //Console.WriteLine($"{PathToGitRepository}");
         if (_url == "")
         {
             throw new Exception("URL is empty");
@@ -82,7 +80,7 @@ public class Git
             throw new Exception("Failed to start fetching of the git commit count and contributors");
         }
         
-        var output = "    NR  Names\n";
+        var output = "     #  Names\n";
         output += p.StandardOutput.ReadToEnd();
         
         p.WaitForExit();
