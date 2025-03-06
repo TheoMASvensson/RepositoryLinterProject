@@ -77,7 +77,13 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(thePath!));
-                Console.WriteLine(Checks.RunAllChecks(fileList, clonedFoldersPath,theChecks));
+                var output = Checks.RunAllChecks(fileList, clonedFoldersPath, theChecks);
+                if (output[1] != "true")
+                {
+                    Environment.ExitCode = 100;
+                }
+                
+                Console.WriteLine(output[0]);
             }
             catch (Exception e)
             {
@@ -119,7 +125,14 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(path));
-                Console.WriteLine(Checks.RunAllChecks(fileList, path, theChecks));
+                var output = Checks.RunAllChecks(fileList, path, theChecks);
+                if (output[1] != "true")
+                {
+                    Environment.ExitCode = 100;
+                }
+                
+                Console.WriteLine(output[0]);
+                Console.WriteLine("Exited with ExitCode: " + Environment.ExitCode);
             }
             catch (Exception e)
             {

@@ -4,44 +4,84 @@ namespace RepoLinter;
 
 public class Checks
 {
-    //List<string> passedChecks = new List<string>();
-    //List<string> failedChecks = new List<string>();
-
-    public static string RunAllChecks(List<string> filePaths, string currentDirectory, List<string> ignoredChecks)
+    public static List<string> RunAllChecks(List<string> filePaths, string currentDirectory, List<string> ignoredChecks)
     {
         var output = "";
+        var clear = "";
+        var failedChecks = new List<string>();
 
         if (ignoredChecks[0] == "true")
         {
-            output += GitignoreCheck(filePaths);
+            var answer = GitignoreCheck(filePaths);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
         if (ignoredChecks[1] == "true")
         {
-            output += LicenseCheck(filePaths);
+            var answer = LicenseCheck(filePaths);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
         if (ignoredChecks[2] == "true")
         {
-            output += SecretCheck(currentDirectory);
+            var answer = SecretCheck(currentDirectory);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
         if (ignoredChecks[3] == "true")
         {
-            output += ReadmeCheck(filePaths);
+            var answer = ReadmeCheck(filePaths);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
         if (ignoredChecks[4] == "true")
         {
-            output += TestCheck(filePaths);
+            var answer = TestCheck(filePaths);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
         if (ignoredChecks[5] == "true")
         {
-            output += WorkflowCheck(filePaths);
+            var answer = WorkflowCheck(filePaths);
+            output += answer[0];
+            if (answer[1] == "false")
+            {
+                failedChecks.Add("gitignore");
+            }
         }
-        
-        return output;
+
+        if (failedChecks.Count > 0)
+        {
+            clear = "false";
+        }
+        else
+        {
+            clear = "true";
+        }
+        var list = new List<string>();
+        list.Add(output); list.Add(clear);
+        return list;
     }
 
-    static string GitignoreCheck(List<string> filePaths)
+    static List<string> GitignoreCheck(List<string> filePaths)
     {
         var result = "";
+        var clear = "";
         var numberOfGitignoreFiles = 0;
         var emptyGitignoreFiles = "";
         var numberOfEmptyGitignoreFiles = 0;
@@ -57,7 +97,7 @@ public class Checks
                 if (string.IsNullOrEmpty(content))
                 {
                     numberOfEmptyGitignoreFiles += 1;
-                    emptyGitignoreFiles += filePath + "\n";
+                    emptyGitignoreFiles += "   " + filePath + "\n";
                 }
             }
         }
@@ -70,24 +110,29 @@ public class Checks
                 result += $"\ud83d\udfe1 Repository contains {numberOfGitignoreFiles} gitignore files, " +
                           $"but {numberOfEmptyGitignoreFiles} gitignore file(s) is/are empty. These are: \n"
                           + emptyGitignoreFiles;
+                clear = "true";
             }
             else
             {
                 result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s)" + "\n";
+                clear = "true";
             }
             
         }
         else
         {
             result += "\ud83d\udd34 Repository does not contain a gitignore file. Please fix" + "\n";
+            clear = "false";
         }
-        
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
 
-    static string LicenseCheck(List<string> filePaths)
+    static List<string> LicenseCheck(List<string> filePaths)
     {
         var result = "";
+        var clear = "";
         var numberOfLicenseFiles = 0;
         
         foreach (var filePath in filePaths)
@@ -101,23 +146,28 @@ public class Checks
         
         if (numberOfLicenseFiles > 1)
         {
-            result += "\ud83d\udfe1 Repository contains to many License files, numbering " + numberOfLicenseFiles + ". Please fix" + "\n";
+            result += "\ud83d\udfe1 Repository contains to many License files, numbering " + numberOfLicenseFiles  + "\n";
+            clear = "true";
         }
         else if (numberOfLicenseFiles == 1)
         {
             result += "\u2705 Repository contains a License file" + "\n";
+            clear = "true";
         }
         if (numberOfLicenseFiles == 0)
         {
             result += "\ud83d\udd34 Repository does not contain a License file. Please fix" + "\n";
+            clear = "false";
         }
-        
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
     
-    static string SecretCheck(string currentDirectory)
+    static List<string> SecretCheck(string currentDirectory)
     {
         var result = "";
+        var clear = "";
 
         var trufflehog = new TruffleHogStuff();
         var trufflehogOutput = trufflehog.RunProcess(currentDirectory);
@@ -139,18 +189,22 @@ public class Checks
                 result += ($"Description: {finding.Description} \n");
                 result += ("--------------------- \n");
             }
+            clear = "false";
         }
         else
         {
             result += "\u2705 Repository does not contain any secrets \n";
+            clear = "true";
         }
-
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
 
-    static string ReadmeCheck(List<string> filePaths)
+    static List<string> ReadmeCheck(List<string> filePaths)
     {
         var result = "";
+        var clear = "";
         var numberOfReadMeFiles = 0;
 
         foreach (var filePath in filePaths)
@@ -166,18 +220,23 @@ public class Checks
         if (numberOfReadMeFiles >= 1)
         {
             result += $"\u2705 Repository contains {numberOfReadMeFiles} README file(s)" + "\n";
+            clear = "true";
         }
 
         if (numberOfReadMeFiles == 0)
         {
             result += "\ud83d\udd34 Repository does not contain a README file. Please fix" + "\n";
+            clear = "false";
         }
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
 
-    static string TestCheck(List<string> filePaths)
+    static List<string> TestCheck(List<string> filePaths)
     {
         var result = "";
+        var clear = "";
         var numberOfTestFiles = 0;
         var testfiles = "";
 
@@ -186,7 +245,7 @@ public class Checks
             if (filePath.ToLower().Contains("test"))
             {
                 numberOfTestFiles += 1;
-                testfiles += "  " + filePath + "\n";
+                testfiles += "   " + filePath + "\n";
 
             }
         }
@@ -194,19 +253,23 @@ public class Checks
         if (numberOfTestFiles >= 1)
         {
             result += $"\u2705 Repository contains {numberOfTestFiles} test files, their full paths are: \n" + testfiles;
+            clear = "true";
         }
 
         if (numberOfTestFiles == 0)
         {
-            result += "\ud83d\udd34 Repository does not contain a test file. Please fix" + "\n";
+            result += "\ud83d\udd34 Repository does not contain any test files. Please fix" + "\n";
+            clear = "false";
         }
-        
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
     
-    static string WorkflowCheck(List<string> filePaths)
+    static List<string> WorkflowCheck(List<string> filePaths)
     {
         var result = "";
+        var clear = "";
         var numberOfWorkflowFiles = 0;
         var workflowFiles = "";
 
@@ -223,12 +286,15 @@ public class Checks
         {
             result += $"\u2705 Repository contains {numberOfWorkflowFiles} workflow file(s), they are: " + "\n";
             result += workflowFiles;
+            clear = "true";
         }
         else
         {
-            result += "\ud83d\udd34 Repository does not contain workflow file(s). Please fix \n";
+            result += "\ud83d\udfe1 Repository does not contain workflow file(s). \n";
+            clear = "true";
         }
-        
-        return result;
+        var list = new List<string>();
+        list.Add(result); list.Add(clear);
+        return list;
     }
 }

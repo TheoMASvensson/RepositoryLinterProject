@@ -4,8 +4,8 @@ pathtofolder = "/home/theo/Desktop/repofolder"
 #Write "true" if related check should be run
 [tests]
 gitignore = "true"
-license = "true"
+license = "true "
 secret = "true"
-readme = "true"
+readme = "true "
 test = "true"
 workflow = "true"
