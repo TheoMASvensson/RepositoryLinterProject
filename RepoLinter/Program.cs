@@ -84,6 +84,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
                 }
                 
                 Console.WriteLine(output[0]);
+                Console.WriteLine("Exited with ExitCode: " + Environment.ExitCode);
             }
             catch (Exception e)
             {
