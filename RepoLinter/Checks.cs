@@ -25,7 +25,7 @@ public class Checks
             output += answer[0];
             if (answer[1] == "false")
             {
-                failedChecks.Add("gitignore");
+                failedChecks.Add("license");
             }
         }
         if (ignoredChecks[2] == "true")
@@ -34,7 +34,7 @@ public class Checks
             output += answer[0];
             if (answer[1] == "false")
             {
-                failedChecks.Add("gitignore");
+                failedChecks.Add("secret");
             }
         }
         if (ignoredChecks[3] == "true")
@@ -43,7 +43,7 @@ public class Checks
             output += answer[0];
             if (answer[1] == "false")
             {
-                failedChecks.Add("gitignore");
+                failedChecks.Add("readme");
             }
         }
         if (ignoredChecks[4] == "true")
@@ -52,7 +52,7 @@ public class Checks
             output += answer[0];
             if (answer[1] == "false")
             {
-                failedChecks.Add("gitignore");
+                failedChecks.Add("test");
             }
         }
         if (ignoredChecks[5] == "true")
@@ -61,7 +61,7 @@ public class Checks
             output += answer[0];
             if (answer[1] == "false")
             {
-                failedChecks.Add("gitignore");
+                failedChecks.Add("workflow");
             }
         }
 
