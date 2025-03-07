@@ -24,10 +24,5 @@ public class GitTests
         Directory.Delete(git.PathToGitRepository, true);
         Assert.True(exists);
     }
-
-    [Fact]
-    public void PathGitCloningWorks()
-    {
-        
-    }
+    
 }

@@ -78,7 +78,7 @@ public class Checks
         return list;
     }
 
-    static List<string> GitignoreCheck(List<string> filePaths)
+    public static List<string> GitignoreCheck(List<string> filePaths)
     {
         var result = "";
         var clear = "";
@@ -129,7 +129,7 @@ public class Checks
         return list;
     }
 
-    static List<string> LicenseCheck(List<string> filePaths)
+    public static List<string> LicenseCheck(List<string> filePaths)
     {
         var result = "";
         var clear = "";
@@ -164,7 +164,7 @@ public class Checks
         return list;
     }
     
-    static List<string> SecretCheck(string currentDirectory)
+    public static List<string> SecretCheck(string currentDirectory)
     {
         var result = "";
         var clear = "";
@@ -201,7 +201,7 @@ public class Checks
         return list;
     }
 
-    static List<string> ReadmeCheck(List<string> filePaths)
+    public static List<string> ReadmeCheck(List<string> filePaths)
     {
         var result = "";
         var clear = "";
@@ -233,7 +233,7 @@ public class Checks
         return list;
     }
 
-    static List<string> TestCheck(List<string> filePaths)
+    public static List<string> TestCheck(List<string> filePaths)
     {
         var result = "";
         var clear = "";
@@ -266,7 +266,7 @@ public class Checks
         return list;
     }
     
-    static List<string> WorkflowCheck(List<string> filePaths)
+    public static List<string> WorkflowCheck(List<string> filePaths)
     {
         var result = "";
         var clear = "";

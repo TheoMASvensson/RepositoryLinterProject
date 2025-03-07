@@ -4,8 +4,11 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\theos\.nuget\packages\newtonsoft.json\13.0.3\lib\net6.0\Newtonsoft.Json.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/theo/.cache/JetBrains/Rider2024.3/resharper-host/temp/Rider/vAny/CoverageData/_RepoLinter.876261321/Snapshot/snapshot.utdcvr</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2f1129ee_002D70d3_002D4902_002D9774_002D5c152baf124f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B3F831FF-C890-439B-98D7-5C9D9FB4AC28::net8.0::UnitTests.UnitTest1&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B3F831FF-C890-439B-98D7-5C9D9FB4AC28::net8.0::UnitTests.GitTests.ChosenPathGitCloningWorks&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B3F831FF-C890-439B-98D7-5C9D9FB4AC28::net8.0::UnitTests.CheckingTests.SecretCheckWorksForCompleteRepo&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
