@@ -70,10 +70,36 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             var clonedFoldersPath = git.PathToGitRepository;
             var fileList = GetAllFiles.AsList(clonedFoldersPath);
 
-            //foreach (var filepath in fileList)
-            //{
-                //Console.WriteLine(filepath);
-            //}
+            var gitignoreContent = new List<string>();
+
+            foreach (var filepath in fileList)
+            {
+                if (filepath.Contains(".gitignore"))
+                {
+                    gitignoreContent.AddRange(File.ReadAllLines(filepath));
+                }
+            }
+
+            foreach (var filepath in fileList)
+            {
+                Console.WriteLine(filepath);
+            }
+            
+            var gitIgnore = new GitIgnore(gitignoreContent);
+            
+            var filteredFiles = gitIgnore.FilterFiles(thePath!);
+            // Remove file paths that contain any of the specified strings
+            
+
+            Console.WriteLine("\n" + "\n");
+
+            // Print the remaining file paths
+            foreach (string path in filteredFiles)
+            {
+                Console.WriteLine(path);
+            }
+
+            
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(thePath!));

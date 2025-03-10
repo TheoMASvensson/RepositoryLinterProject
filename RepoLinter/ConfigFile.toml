@@ -9,3 +9,7 @@ secret = "true"
 readme = "true"
 test = "true"
 workflow = "true"
+
+#A list off extra options that can be enabled, write "true" if option should be enabled
+[extraOptions]
+
