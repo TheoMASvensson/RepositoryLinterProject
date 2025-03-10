@@ -74,36 +74,27 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
             foreach (var filepath in fileList)
             {
-                if (filepath.Contains(".gitignore"))
+                if (Path.GetFileName(filepath) == ".gitignore")
                 {
                     gitignoreContent.AddRange(File.ReadAllLines(filepath));
                 }
             }
-
-            foreach (var filepath in fileList)
-            {
-                Console.WriteLine(filepath);
-            }
             
             var gitIgnore = new GitIgnore(gitignoreContent);
+            var keptFilePaths = new List<string>();
             
-            var filteredFiles = gitIgnore.FilterFiles(thePath!);
-            // Remove file paths that contain any of the specified strings
-            
-
-            Console.WriteLine("\n" + "\n");
-
-            // Print the remaining file paths
-            foreach (string path in filteredFiles)
+            foreach (var filePath in fileList)
             {
-                Console.WriteLine(path);
+                if (!gitIgnore.ShouldIgnore(filePath))
+                {
+                    keptFilePaths.Add(filePath);
+                }
             }
-
             
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(thePath!));
-                var output = Checks.RunAllChecks(fileList, clonedFoldersPath, theChecks);
+                var output = Checks.RunAllChecks(keptFilePaths, clonedFoldersPath, theChecks);
                 if (output[1] != "true")
                 {
                     Environment.ExitCode = 100;
@@ -143,16 +134,32 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             
             // Get all files in repository as a list
             var fileList = GetAllFiles.AsList(path);
+            
+            var gitignoreContent = new List<string>();
 
-            //foreach (var filepath in fileList)
-            //{
-            //    Console.WriteLine(filepath);
-            //}
+            foreach (var filepath in fileList)
+            {
+                if (Path.GetFileName(filepath) == ".gitignore")
+                {
+                    gitignoreContent.AddRange(File.ReadAllLines(filepath));
+                }
+            }
+            
+            var gitIgnore = new GitIgnore(gitignoreContent);
+            var keptFilePaths = new List<string>();
+            
+            foreach (var filePath in fileList)
+            {
+                if (!gitIgnore.ShouldIgnore(filePath))
+                {
+                    keptFilePaths.Add(filePath);
+                }
+            }
 
             try
             {
                 Console.WriteLine(git.GetCommitsAndContributors(path));
-                var output = Checks.RunAllChecks(fileList, path, theChecks);
+                var output = Checks.RunAllChecks(keptFilePaths, path, theChecks);
                 if (output[1] != "true")
                 {
                     Environment.ExitCode = 100;

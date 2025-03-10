@@ -11,15 +11,16 @@ class GitIgnore
     private List<string> _ignorePatterns;
     private List<string> _exceptionPatterns;
 
-    public GitIgnore(List<string> ignoreFilePath)
+    public GitIgnore(List<string> ignoreRules)
     {
         _ignorePatterns = new List<string>();
         _exceptionPatterns = new List<string>();
-        
-        foreach (var line in ignoreFilePath)
-        { 
-            ParseIgnoreRule(line);
+
+        foreach (var rule in ignoreRules)
+        {
+            ParseIgnoreRule(rule);
         }
+        
     }
 
     private void ParseIgnoreRule(string rule)
@@ -46,6 +47,13 @@ class GitIgnore
             return false;
 
         // Check if the path matches any ignore pattern
+        foreach (var pattern in _ignorePatterns)
+        {
+            if (path.Contains(pattern))
+            {
+                return true;
+            }
+        }
         return _ignorePatterns.Any(pattern => MatchesPattern(path, pattern));
     }
 
@@ -56,15 +64,16 @@ class GitIgnore
             .Replace(@"\*", ".*") // Replace * with .*
             .Replace(@"\?", ".");  // Replace ? with .
 
-        // Ensure the pattern matches the entire path
-        regexPattern = "^" + regexPattern + "$";
+        // Handle directory-specific patterns (e.g., /folder)
+        if (pattern.StartsWith("/"))
+        {
+            regexPattern = "^.*" + regexPattern + "$";
+        }
+        else
+        {
+            regexPattern = "^" + regexPattern + "$";
+        }
 
         return Regex.IsMatch(path, regexPattern, RegexOptions.IgnoreCase);
-    }
-
-    public IEnumerable<string> FilterFiles(string rootDirectory)
-    {
-        var files = Directory.GetFiles(rootDirectory, "*", SearchOption.AllDirectories);
-        return files.Where(file => !ShouldIgnore(file));
     }
 }
