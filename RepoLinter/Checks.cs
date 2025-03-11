@@ -84,6 +84,7 @@ public class Checks
         var clear = "";
         var numberOfGitignoreFiles = 0;
         var emptyGitignoreFiles = "";
+        var gitignoreFilesWithContent = "";
         var numberOfEmptyGitignoreFiles = 0;
 
         foreach (var filePath in filePaths)
@@ -99,6 +100,10 @@ public class Checks
                     numberOfEmptyGitignoreFiles += 1;
                     emptyGitignoreFiles += "   " + filePath + "\n";
                 }
+                else
+                {
+                    gitignoreFilesWithContent += "   " + filePath + "\n";
+                }
             }
         }
 
@@ -107,14 +112,14 @@ public class Checks
         {
             if (numberOfEmptyGitignoreFiles >= 1)
             {
-                result += $"\ud83d\udfe1 Repository contains {numberOfGitignoreFiles} gitignore files, " +
-                          $"but {numberOfEmptyGitignoreFiles} gitignore file(s) is/are empty. These are: \n"
+                result += $"\ud83d\udfe1 Repository contains {numberOfGitignoreFiles} gitignore files, These are \n" + $"{gitignoreFilesWithContent}" +
+                          $"   but {numberOfEmptyGitignoreFiles} gitignore file(s) is/are empty. These are: \n"
                           + emptyGitignoreFiles;
                 clear = "true";
             }
             else
             {
-                result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s)" + "\n";
+                result += $"\u2705 Repository contains {numberOfGitignoreFiles} gitignore file(s), these are: " + "\n" + gitignoreFilesWithContent ;
                 clear = "true";
             }
             
@@ -134,6 +139,9 @@ public class Checks
         var result = "";
         var clear = "";
         var numberOfLicenseFiles = 0;
+        var numberOfEmptyLicenseFiles = 0;
+        var licenseFilesWithContent = "";
+        var licenseFilesWithoutContent = "";
         
         foreach (var filePath in filePaths)
         {
@@ -141,18 +149,41 @@ public class Checks
             if (filename.ToLower().Contains("license"))
             {
                 numberOfLicenseFiles += 1;
+                
+                string content = File.ReadAllText(filePath);
+                if (string.IsNullOrEmpty(content))
+                {
+                    numberOfEmptyLicenseFiles += 1;
+                    licenseFilesWithoutContent += "   " + filePath + "\n";
+                }
+                else
+                {
+                    licenseFilesWithContent += "   " + filePath + "\n";
+                }
             }
         }
         
         if (numberOfLicenseFiles > 1)
         {
-            result += "\ud83d\udfe1 Repository contains to many License files, numbering " + numberOfLicenseFiles  + "\n";
+            result += "\ud83d\udfe1 Repository contains more than one License files, numbering " + numberOfLicenseFiles + ". \n" + 
+                      $"   Of these {numberOfLicenseFiles - numberOfEmptyLicenseFiles} have contents, they are: \n" + licenseFilesWithContent + 
+                      $"   {numberOfEmptyLicenseFiles} file(s) have no contents, they are: \n" + licenseFilesWithoutContent;
             clear = "true";
         }
         else if (numberOfLicenseFiles == 1)
         {
-            result += "\u2705 Repository contains a License file" + "\n";
-            clear = "true";
+            if (numberOfEmptyLicenseFiles == 1)
+            {
+                result += "\ud83d\udfe1 Repository contains a License file but it is empty, it is located at: \n" +
+                          licenseFilesWithoutContent;
+                clear = "true";
+            }
+            else
+            {
+                result += "\u2705 Repository contains a License file with content, it is located at: " + "\n" + licenseFilesWithContent;
+                clear = "true";
+            }
+            
         }
         if (numberOfLicenseFiles == 0)
         {
@@ -205,7 +236,10 @@ public class Checks
     {
         var result = "";
         var clear = "";
+        var filledReadmeFiles = "";
+        var emptyReadmeFiles = "";
         var numberOfReadMeFiles = 0;
+        var numberOfEmptyReadMeFiles = 0;
 
         foreach (var filePath in filePaths)
         {
@@ -214,12 +248,25 @@ public class Checks
             if (filename.ToLower().Contains("readme"))
             {
                 numberOfReadMeFiles += 1;
+                
+                string content = File.ReadAllText(filePath);
+                if (string.IsNullOrEmpty(content))
+                {
+                    numberOfEmptyReadMeFiles += 1;
+                    emptyReadmeFiles += "   " + filePath + "\n";
+                }
+                else
+                {
+                    filledReadmeFiles += "   " + filePath + "\n";
+                }
             }
         }
 
         if (numberOfReadMeFiles >= 1)
         {
-            result += $"\u2705 Repository contains {numberOfReadMeFiles} README file(s)" + "\n";
+            result += $"\u2705 Repository contains {numberOfReadMeFiles} README file(s)" + "\n" + 
+                      $"   Of these, {numberOfReadMeFiles - numberOfEmptyReadMeFiles} have contents, they are: \n" + filledReadmeFiles + 
+                      $"   And {numberOfEmptyReadMeFiles} are empty, they are located at: \n" + emptyReadmeFiles;
             clear = "true";
         }
 
