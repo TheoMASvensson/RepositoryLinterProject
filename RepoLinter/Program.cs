@@ -97,11 +97,12 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
                 var output = Checks.RunAllChecks(keptFilePaths, clonedFoldersPath, theChecks);
                 if (output[1] != "true")
                 {
-                    Environment.ExitCode = 100;
+                    Console.WriteLine(output[0]);
+                    Environment.Exit(100);
                 }
                 
                 Console.WriteLine(output[0]);
-                Console.WriteLine("Exited with ExitCode: " + Environment.ExitCode);
+                Environment.Exit(0);
             }
             catch (Exception e)
             {
@@ -162,11 +163,12 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
                 var output = Checks.RunAllChecks(keptFilePaths, path, theChecks);
                 if (output[1] != "true")
                 {
-                    Environment.ExitCode = 100;
+                    Console.WriteLine(output[0]);
+                    Environment.Exit(100);
                 }
                 
                 Console.WriteLine(output[0]);
-                Console.WriteLine("Exited with ExitCode: " + Environment.ExitCode);
+                Environment.Exit(0);
             }
             catch (Exception e)
             {

@@ -85,7 +85,7 @@ public class Git
         
         p.WaitForExit();
 
-        if (output == "    NR  Names\n")
+        if (output == "     #  Names\n")
         {
             throw new Exception("Failed to get git commit count and contributors, not a git repository");
         }
