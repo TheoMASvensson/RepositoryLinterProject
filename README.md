@@ -2,20 +2,20 @@
 
 This is a simple Git repository linter for a Sofware Development Course at BTH.
 
-## Features
+## Linters Features
 
 - The linter checks whether or not the repository contains a README, LICENSE file, .gitignore file and GitHub WorkFlow files (.github/workflows/).
 - The linter checks what files filepaths include the word "test" and prints them out.
 - The linter checks the repository for secrets using Trufflehog (https://github.com/trufflesecurity/trufflehog).
 
-## Run the program
+## Run The Program
 
 - Clone the repository
 - Ensure that Git is installed
 - Ensure that .NET Core 8 is installed
 - Ensure that Trufflehog (https://github.com/trufflesecurity/trufflehog) is installed
 
-## How to use
+## How To Use
 
 ### Run the linter on a single repository using url
 To run the linter on a GitHub repository using a url, traverse to the "RepoLinter" folder in the terminal and run the following command:
@@ -46,7 +46,7 @@ workflow = "true"
 
 ```
 
-## Run tests
+## Run Tests
 
 The unit tests are using the xUnit framework but they are far from comprehensive, I apologize.
 
