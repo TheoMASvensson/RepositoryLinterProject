@@ -1,5 +1,5 @@
 #Full path to an empty folder where repository should be cloned
-pathtofolder = "/home/theo/Desktop/repofolder"
+pathtofolder = ""
 
 #Write "true" if related check should be run, anything else is considered to be an unwanted check
 [tests]
@@ -10,6 +10,4 @@ readme = "true"
 test = "true"
 workflow = "true"
 
-#A list off extra options that can be enabled, write "true" if option should be enabled
-[extraOptions]
 
