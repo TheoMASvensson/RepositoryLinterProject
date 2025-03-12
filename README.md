@@ -52,5 +52,4 @@ The unit tests are using the xUnit framework but they are far from comprehensive
 
 - Clone the repository
 - Install all dependencies listed in the [Run without Docker](#run-without-docker) section
-- Run ```dotnet restore``` in the root of the repository to restore dependencies
 - Run ```dotnet test``` in the root of the repository to run tests
