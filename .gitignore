@@ -1,6 +1,4 @@
-.idea
 bin/
-/Debug
 obj/
 .idea/.idea.RepositoryLinter/.idea
 RepositoryLinter.sln.DotSettings.user
