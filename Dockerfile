@@ -9,6 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["RepoLinter/RepoLinter.csproj", "RepoLinter/"]
 RUN dotnet restore "RepoLinter/RepoLinter.csproj"
+#COPY ConfigFile.toml .
 COPY . .
 WORKDIR "/src/RepoLinter"
 RUN dotnet build "RepoLinter.csproj" -c $BUILD_CONFIGURATION -o /app/build

@@ -36,10 +36,12 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
 
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
+            Console.WriteLine(Directory.GetCurrentDirectory());
             
             string tomlContent = File.ReadAllText("ConfigFile.toml");
             
             TomlTable tomlTable = Toml.ToModel(tomlContent);
+            
             
             string ?thePath = tomlTable["pathtofolder"] as string;
             
@@ -52,6 +54,7 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             var readme = checkTable["readme"] as string; theChecks.Add(readme!);
             var test = checkTable["test"] as string; theChecks.Add(test!);
             var workflow = checkTable["workflow"] as string; theChecks.Add(workflow!);
+            
             
             var git = new Git(url, thePath!);
             
