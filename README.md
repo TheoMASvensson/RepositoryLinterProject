@@ -51,5 +51,5 @@ workflow = "true"
 The unit tests are using the xUnit framework but they are far from comprehensive, I apologize.
 
 - Clone the repository
-- Install all dependencies listed in the [Run without Docker](#run-without-docker) section
+- Install all dependencies listed earlier
 - Run ```dotnet test``` in the root of the repository to run tests
