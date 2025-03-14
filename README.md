@@ -29,7 +29,7 @@ dotnet run path /path/to/chosen/repository
 ```
 
 ## Configuration
-The program can be configured using a toml file that is contained in the repository. If no changes are made it will run all checks and place the cloned repository in /tmp/gitrepo
+The program can be configured using a toml file that is contained in the repository. If no changes are made it will run all checks and place the cloned repository in the current users temporary folder
 
 ```toml
 #Full path to an empty folder where repository should be cloned, if left empty defaults to /tmp/gitrepo.
