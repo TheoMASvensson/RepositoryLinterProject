@@ -1,5 +1,5 @@
 #Full path to an empty folder where repository should be cloned
-pathtofolder = "C:\\Users\\theos\\Desktop\\RARARARARA"
+pathtofolder = ""
 
 #Write "true" if related check should be run, anything else is considered to be an unwanted check
 [tests]
