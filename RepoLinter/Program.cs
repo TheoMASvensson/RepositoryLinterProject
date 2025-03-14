@@ -181,7 +181,5 @@ var rootCommand = new RootCommand("A simple linter that takes a GitHub URL or pa
             
         }, pathArg);
 
-        //TODO: Return 0 if all checks are passed. A 1 if any of them fail
-        //TODO: Finish Dockerfile
 
         return await rootCommand.InvokeAsync(args);
