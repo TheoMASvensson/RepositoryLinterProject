@@ -24,11 +24,9 @@ class GitIgnore
 
     private void ParseIgnoreRule(string rule)
     {
-        // Skip empty lines and comments
         if (string.IsNullOrWhiteSpace(rule) || rule.StartsWith("#"))
             return;
 
-        // Handle exceptions (lines starting with !)
         if (rule.StartsWith("!"))
         {
             _exceptionPatterns.Add(rule.Substring(1));
@@ -41,11 +39,9 @@ class GitIgnore
 
     public bool ShouldIgnore(string path)
     {
-        // Check if the path matches any exception pattern
         if (_exceptionPatterns.Any(pattern => MatchesPattern(path, pattern)))
             return false;
 
-        // Check if the path matches any ignore pattern
         foreach (var pattern in _ignorePatterns)
         {
             if (path.Contains(pattern))
@@ -63,7 +59,6 @@ class GitIgnore
             .Replace(@"\*", ".*") // Replace * with .*
             .Replace(@"\?", ".");  // Replace ? with .
 
-        // Handle directory-specific patterns (e.g., /folder)
         if (pattern.StartsWith("/"))
         {
             regexPattern = "^.*" + regexPattern + "$";
